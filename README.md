@@ -26,3 +26,60 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 ## How do I deploy this?
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+
+## Table of contents
+
+- <a href="#about">About T3 Stack</a>
+- <a href="#architecture">Architecture of Todo App</a>
+- <a href="#project-setup">Project setup</a>
+
+<h2 id="about">About T3 Stack</h2>
+
+"T3 Stack" consists of following tech and enable full stack type-safe web development speedy and simple.
+
+- [Next.js](https://nextjs.org)
+- [tRPC](https://trpc.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [TypeScript](https://typescriptlang.org)
+- [Prisma](https://prisma.io)
+- [NextAuth.js](https://next-auth.js.org)
+
+<h2 id="architecture">Architecture of Todo App</h2>
+
+<img src="./architecture.png" width="700px"/>
+
+<h2 id="project-setup">Project setup</h2>
+
+### Create T3 project
+
+```bash
+$ npm create t3-app@latest
+```
+
+### DB setup
+
+start db
+
+```bash
+$ docker compose up -d
+```
+
+remove db
+
+```bash
+$ docker compose rm -s -f -v
+```
+
+prisma migrate and type generation
+
+```bash
+$ npx prisma migrate dev --name (名前)
+```
+
+```bash
+$ npx prisma generate
+```
+
+```bash
+$ npx prisma studio
+```
