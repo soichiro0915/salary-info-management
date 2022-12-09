@@ -1,6 +1,6 @@
 import type { FormEvent } from "react";
-import useStore from "../store/salaryInfo";
-import { useMutateSalaryInfo } from "../hooks/useMutateSalaryInfo";
+import useStore from "../../store/salaryInfo";
+import { useMutateSalaryInfo } from "../../hooks/useMutateSalaryInfo";
 import dayjs from "dayjs";
 
 const nowYearMonth = dayjs().format("YYYY-MM");
@@ -98,7 +98,7 @@ export const SalaryInfoForm = () => {
           createSalaryInfoMutation.error.data.zodError.fieldErrors.month}
       </p>
 
-      <h1>手取り　{netIncome}円</h1>
+      <h1>手取り {netIncome}円</h1>
 
       <h2>収入 {salary}円</h2>
 
@@ -324,7 +324,7 @@ export const SalaryInfoForm = () => {
             .otherDeductin}
       </p>
 
-      <button className="rounded bg-indigo-600 py-1 px-3 text-white hover:bg-indigo-700 focus:outline-none">
+      <button className="rounded bg-indigo-600 py-1 px-3 text-white hover:bg-opacity-80 focus:outline-none">
         {editedSalaryInfo.salaryInfoId === "" ? "Create" : "Update"}
       </button>
     </form>

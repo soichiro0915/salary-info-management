@@ -84,4 +84,8 @@ $ npx prisma generate
 $ npx prisma studio
 ```
 
+```bash
+$ npx prisma migrate deploy
+```
+
 schema -> バリデーション

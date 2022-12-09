@@ -2,7 +2,8 @@ import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { Auth } from "../components/Auth";
 import { Layout } from "../components/Layout";
-import { SalaryInfoForm } from "../components/SalaryInfoForm";
+import { SalaryInfoForm } from "../components/salaryInfo/Form";
+import { SalaryInfoList } from "../components/salaryInfo/List";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -23,6 +24,7 @@ const Home: NextPage = () => {
       </button>
       <p>{session?.user?.name}</p>
       <SalaryInfoForm />
+      <SalaryInfoList />
     </Layout>
   );
 };
