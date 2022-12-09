@@ -69,10 +69,7 @@ export const SalaryInfoForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-5 text-center">
-      {(updateSalaryInfoMutation.isLoading ||
-        createSalaryInfoMutation.isLoading) && (
-        <p className="mb-2 text-green-500">Mutation under process...</p>
-      )}
+      
       <input
         type="month"
         required
@@ -327,6 +324,11 @@ export const SalaryInfoForm = () => {
       <button className="rounded bg-indigo-600 py-1 px-3 text-white hover:bg-opacity-80 focus:outline-none">
         {editedSalaryInfo.salaryInfoId === "" ? "Create" : "Update"}
       </button>
+      
+      {(updateSalaryInfoMutation.isLoading ||
+        createSalaryInfoMutation.isLoading) && (
+        <p className="mb-2 text-green-500">Mutation under process...</p>
+      )}
     </form>
   );
 };
