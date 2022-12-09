@@ -80,7 +80,7 @@ model SalaryInfo {
   annuityPrice                Int?
   employmentInsurancePremium  Int?
   federalLawPermits           Int?
-  otheDeducting               Int?
+  otherDeductin               Int?
 
   createdAt                   DateTime @default(now())
   updatedAt                   DateTime @updatedAt

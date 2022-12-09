@@ -1,8 +1,11 @@
 import z from "zod";
+import dayjs from 'dayjs';
+
+const nowYear = dayjs().year();
 
 export const createSalaryInfoSchema = z.object({
-  year: z.number().min(4).max(4),
-  month: z.number().min(2).max(2),
+  year: z.number().min(1900).max(nowYear),
+  month: z.number().min(1).max(12),
   basicSalary: z.number().min(0).max(10000000000),
   overtimePay: z.number().min(0).max(10000000000),
   allowances: z.number().min(0).max(10000000000),
@@ -14,7 +17,7 @@ export const createSalaryInfoSchema = z.object({
   annuityPrice: z.number().min(0).max(10000000000),
   employmentInsurancePremium: z.number().min(0).max(10000000000),
   federalLawPermits: z.number().min(0).max(10000000000),
-  otheDeducting: z.number().min(0).max(10000000000),
+  otherDeductin: z.number().min(0).max(10000000000),
 });
 
 export type CreateSalaryInfoInput = z.TypeOf<typeof createSalaryInfoSchema>;
@@ -34,7 +37,7 @@ export const updateSalaryInfoSchema = z.object({
   annuityPrice: z.number().min(0).max(10000000000),
   employmentInsurancePremium: z.number().min(0).max(10000000000),
   federalLawPermits: z.number().min(0).max(10000000000),
-  otheDeducting: z.number().min(0).max(10000000000),
+  otherDeductin: z.number().min(0).max(10000000000),
 });
 
 export type updateSalaryInfoInput = z.TypeOf<typeof updateSalaryInfoSchema>;

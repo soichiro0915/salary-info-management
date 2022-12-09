@@ -23,7 +23,7 @@ const useStore = create<State>((set) => ({
     annuityPrice: 0,
     employmentInsurancePremium: 0,
     federalLawPermits: 0,
-    otheDeducting: 0,
+    otherDeductin: 0,
   },
 
   updateEditedSalaryInfo: (payload) =>
@@ -48,7 +48,7 @@ const useStore = create<State>((set) => ({
         annuityPrice: 0,
         employmentInsurancePremium: 0,
         federalLawPermits: 0,
-        otheDeducting: 0,
+        otherDeductin: 0,
       },
     }),
 }));

@@ -83,3 +83,5 @@ $ npx prisma generate
 ```bash
 $ npx prisma studio
 ```
+
+schema -> バリデーション

@@ -10,6 +10,9 @@ export const salaryInfoRouter = router({
   createSalaryInfo: protectedProcedure
     .input(createSalaryInfoSchema)
     .mutation(async ({ ctx, input }) => {
+      console.log(111111111)
+      console.log(input)
+      console.log(2222222222)
       const salaryInfo = await ctx.prisma.salaryInfo.create({
         data: {
           ...input,
