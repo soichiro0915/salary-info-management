@@ -19,6 +19,12 @@ export const salaryInfoRouter = router({
               id: ctx.session?.user?.id,
             },
           },
+          term: {
+            connect: {
+              //既存のデータとの関連を作る
+              id: input.termId,
+            },
+          },
         },
       });
       return salaryInfo;
@@ -29,8 +35,7 @@ export const salaryInfoRouter = router({
       where: {
         userId: ctx.session?.user?.id,
       },
-      orderBy: {
-      },
+      orderBy: {month: "desc"},
     });
   }),
 
@@ -52,7 +57,6 @@ export const salaryInfoRouter = router({
           id: input.salaryInfoId,
         },
         data: {
-          year: input.year,
           month: input.month,
           basicSalary: input.basicSalary,
           overtimePay: input.overtimePay,

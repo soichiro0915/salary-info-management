@@ -3,6 +3,7 @@ import { SalaryInfoItem } from "./Item";
 
 export const SalaryInfoList = () => {
   const { data, isLoading, error } = trpc.salaryInfo.getSalaryInfos.useQuery();
+  
   if (isLoading) {
     return <p>Loading task list...</p>;
   }
@@ -15,7 +16,6 @@ export const SalaryInfoList = () => {
         <SalaryInfoItem
           key={salaryInfo.id}
           salaryInfoId={salaryInfo.id}
-          year={salaryInfo.year}
           month={salaryInfo.month}
           basicSalary={salaryInfo.basicSalary || 0}
           overtimePay={salaryInfo.overtimePay || 0}

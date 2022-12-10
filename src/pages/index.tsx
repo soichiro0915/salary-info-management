@@ -4,6 +4,8 @@ import { Auth } from "../components/Auth";
 import { Layout } from "../components/Layout";
 import { SalaryInfoForm } from "../components/salaryInfo/Form";
 import { SalaryInfoList } from "../components/salaryInfo/List";
+import { TermRegister } from "../components/term/Register";
+import { TermList } from "../components/term/List";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -23,8 +25,11 @@ const Home: NextPage = () => {
         SignOut
       </button>
       <p>{session?.user?.name}</p>
-      <SalaryInfoForm />
-      <SalaryInfoList />
+      <TermRegister />
+      <TermList />
+
+      {/* <SalaryInfoForm />
+      <SalaryInfoList /> */}
     </Layout>
   );
 };

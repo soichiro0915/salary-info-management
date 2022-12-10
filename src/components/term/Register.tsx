@@ -1,0 +1,70 @@
+import type { FormEvent } from "react";
+import useStore from "../../store/term";
+import { useMutateTerm } from "../../hooks/useMutateTerm";
+import dayjs from "dayjs";
+
+const nowYear = dayjs().year();
+
+export const TermRegister = () => {
+  const { createTermMutation, updateTermMutation } = useMutateTerm();
+  const { editedTerm } = useStore();
+  const update = useStore((state) => state.updateEditedTerm);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (editedTerm.termId === "")
+      createTermMutation.mutate({
+        year: editedTerm.year,
+      });
+    else {
+      updateTermMutation.mutate({
+        termId: editedTerm.termId,
+        year: editedTerm.year,
+      });
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="mb-5 text-center">
+      {(createTermMutation.isLoading || createTermMutation.isLoading) && (
+        <p className="mb-2 text-green-500">Mutation under process...</p>
+      )}
+      <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+        何年のデータを追加しますか？
+      </label>
+      <select
+        name="year"
+        onChange={(e) => {
+          update({
+            ...editedTerm,
+            year: parseInt(e.target.value),
+          });
+        }}
+        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+      >
+        <option selected>-</option>
+        {[...Array(50)]
+          .map((_, i) => nowYear - i)
+          .map((year) => (
+            <option value={year} key={year}>
+              {year}年
+            </option>
+          ))}
+      </select>
+      <p className="mb-3 text-red-500">
+        {createTermMutation.error?.data?.zodError &&
+          createTermMutation.error.data.zodError.fieldErrors.year}
+      </p>
+      {createTermMutation.error?.data?.httpStatus === 500 && (
+        <p className="mb-3 text-red-500"> 追加できませんでした。</p>
+      )}
+      <p className="text-gray-500">注意　</p>
+      <p className="mb-3 text-sm text-gray-500">
+        重複する年度は追加することができません。
+      </p>
+      <button className="rounded bg-indigo-600 py-1 px-3 text-white hover:bg-opacity-80 focus:outline-none">
+        追加
+      </button>
+    </form>
+  );
+};

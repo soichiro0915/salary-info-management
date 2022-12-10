@@ -10,7 +10,6 @@ type State = {
 const useStore = create<State>((set) => ({
   editedSalaryInfo: {
     salaryInfoId: "",
-    year: 0,
     month: 0,
     basicSalary: 0,
     overtimePay: 0,
@@ -35,7 +34,6 @@ const useStore = create<State>((set) => ({
     set({
       editedSalaryInfo: {
         salaryInfoId: "",
-        year: 0,
         month: 0,
         basicSalary: 0,
         overtimePay: 0,

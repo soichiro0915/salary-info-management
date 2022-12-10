@@ -56,10 +56,10 @@ const SingleSalaryInfoPage: NextPage = () => {
       <p className="my-1">労働組合費 {data?.federalLawPermits}円</p>
       <p className="my-1">その他 {data?.otherDeductin}円</p>
       <p className="my-1 text-sm">
-        {data && dayjs(data.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+        作成日  {data && dayjs(data.createdAt).format("YYYY-MM-DD HH:mm:ss")}
       </p>
       <p className="my-1 text-sm">
-        {data && dayjs(data.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
+        更新日  {data && dayjs(data.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
       </p>
       <Link href={`/`}>
         <p className="text-blue-400 hover:text-blue-700">戻る</p>
