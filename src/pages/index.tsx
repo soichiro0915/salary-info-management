@@ -8,14 +8,8 @@ import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
-  const { data, isLoading, error } = trpc.salaryInfo.getSalaryInfos.useQuery();
-  
-  if (isLoading) {
-    return <p>Loading task list...</p>;
-  }
-  if (error) {
-    return <p>{error.message}</p>;
-  }
+  const { data } = trpc.salaryInfo.getSalaryInfos.useQuery();
+
   if (!session) {
     return (
       <Layout title="Login">
