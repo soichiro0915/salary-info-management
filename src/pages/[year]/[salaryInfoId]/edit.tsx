@@ -37,7 +37,6 @@ const SingleSalaryInfoPage: NextPage = () => {
       federalLawPermits: editedSalaryInfo.federalLawPermits,
       otherDeductin: editedSalaryInfo.otherDeductin,
     });
-    router.push(`/${year}/${salaryInfoId}`);
   };
 
   useEffect(() => {
@@ -58,8 +57,15 @@ const SingleSalaryInfoPage: NextPage = () => {
       federalLawPermits: data?.federalLawPermits || 0,
       otherDeductin: data?.otherDeductin || 0,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (updateSalaryInfoMutation.isSuccess) {
+      router.push(`/${year}/${salaryInfoId}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateSalaryInfoMutation.isSuccess]);
 
   const salary =
     editedSalaryInfo.basicSalary +

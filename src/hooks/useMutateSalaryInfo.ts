@@ -38,8 +38,6 @@ export const useMutateSalaryInfo = () => {
             )
           );
         }
-        //編集中のデータをリセットする
-        reset();
       },
     }
   );
