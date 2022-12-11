@@ -2,15 +2,15 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
-import { trpc } from "../../utils/trpc";
-import { Layout } from "../../components/Layout";
+import { trpc } from "../../../utils/trpc";
+import { Layout } from "../../../components/Layout";
 
 const SingleSalaryInfoPage: NextPage = () => {
   const router = useRouter();
-  const salaryInfoId = router.query.salaryInfoId as string;
+  const { year, salaryInfoId } = router.query;
   const { data, isLoading, error } =
     trpc.salaryInfo.getSingleSalaryInfo.useQuery({
-      salaryInfoId,
+      salaryInfoId: salaryInfoId as string,
     });
   const salary =
     (data?.basicSalary || 0) +
@@ -37,7 +37,10 @@ const SingleSalaryInfoPage: NextPage = () => {
   return (
     <Layout title="Task Detail">
       <p className="mb-3 text-xl font-bold text-blue-600">
-        {data?.year + "/" + data?.month}
+        {year + "/" + data?.month}
+        <Link href={`/${year}/${data?.id}/edit`}>
+          <span className="text-blue-400 hover:text-blue-700">編集</span>
+        </Link>
       </p>
       <p className="my-1 text-xl font-bold">手取り {netIncome}円</p>
       <p className="my-1 text-lg text-red-600">収入 {salary}円</p>
@@ -56,10 +59,10 @@ const SingleSalaryInfoPage: NextPage = () => {
       <p className="my-1">労働組合費 {data?.federalLawPermits}円</p>
       <p className="my-1">その他 {data?.otherDeductin}円</p>
       <p className="my-1 text-sm">
-        作成日  {data && dayjs(data.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+        作成日 {data && dayjs(data.createdAt).format("YYYY-MM-DD HH:mm:ss")}
       </p>
       <p className="my-1 text-sm">
-        更新日  {data && dayjs(data.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
+        更新日 {data && dayjs(data.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
       </p>
       <Link href={`/`}>
         <p className="text-blue-400 hover:text-blue-700">戻る</p>

@@ -1,10 +1,13 @@
 import create from "zustand";
-import type { updateTermInput } from "../schema/term";
+import type { updateTermInput, selectedTermInput } from "../schema/term";
 
 type State = {
   editedTerm: updateTermInput;
   updateEditedTerm: (payload: updateTermInput) => void;
   resetEditedTerm: () => void;
+
+  selectedTerm: selectedTermInput;
+  updateSelectedTerm: (payload: selectedTermInput) => void;
 };
 
 const useStore = create<State>((set) => ({
@@ -24,6 +27,16 @@ const useStore = create<State>((set) => ({
         termId: "",
         year: 0,
       },
+    }),
+
+  selectedTerm: {
+    termId: "",
+    year: 0,
+  },
+
+  updateSelectedTerm: (payload) =>
+    set({
+      selectedTerm: payload,
     }),
 }));
 

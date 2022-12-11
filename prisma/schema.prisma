@@ -79,19 +79,19 @@ model SalaryInfo {
   termId                      String
   month                       Int
   //収入
-  basicSalary                 Int?
-  overtimePay                 Int?
-  allowances                  Int?
-  bonus                       Int?
-  otherSalary                 Int?
+  basicSalary                 Int?  @default(0)
+  overtimePay                 Int?  @default(0)
+  allowances                  Int?  @default(0)
+  bonus                       Int?  @default(0)
+  otherSalary                 Int?  @default(0)
   //控除　　
-  incomeTax                   Int?
-  residentTax                 Int?
-  healthInsurancePremium      Int?
-  annuityPrice                Int?
-  employmentInsurancePremium  Int?
-  federalLawPermits           Int?
-  otherDeductin               Int?
+  incomeTax                   Int?  @default(0)
+  residentTax                 Int?  @default(0)
+  healthInsurancePremium      Int?  @default(0)
+  annuityPrice                Int?  @default(0)
+  employmentInsurancePremium  Int?  @default(0)
+  federalLawPermits           Int?  @default(0)
+  otherDeductin               Int?  @default(0)
 
   createdAt                   DateTime @default(now())
   updatedAt                   DateTime @updatedAt

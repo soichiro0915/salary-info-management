@@ -18,11 +18,12 @@ export const useMutateSalaryInfo = () => {
             ...previousSalaryInfos,
           ]);
         }
-        //編集中のデータをリセットする
-        reset();
       },
     }
   );
+
+  // const bulkCreateSalaryInfosMutation =
+  //   trpc.salaryInfo.bulkCreateSalaryInfos.useMutation();
 
   const updateSalaryInfoMutation = trpc.salaryInfo.updateSalaryInfo.useMutation(
     {
@@ -64,6 +65,7 @@ export const useMutateSalaryInfo = () => {
 
   return {
     createSalaryInfoMutation,
+    // bulkCreateSalaryInfosMutation,
     updateSalaryInfoMutation,
     deleteSalaryInfoMutation,
   };

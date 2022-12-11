@@ -1,5 +1,6 @@
 import {
   createSalaryInfoSchema,
+  // bulkCreateSalaryInfosSchema,
   getSingleSalaryInfoSchema,
   updateSalaryInfoSchema,
   deleteSalaryInfoSchema,
@@ -10,9 +11,9 @@ export const salaryInfoRouter = router({
   createSalaryInfo: protectedProcedure
     .input(createSalaryInfoSchema)
     .mutation(async ({ ctx, input }) => {
-      const salaryInfo = await ctx.prisma.salaryInfo.create({
+      return await ctx.prisma.salaryInfo.create({
         data: {
-          ...input,
+          month: input.month,
           user: {
             connect: {
               //既存のデータとの関連を作る
@@ -27,15 +28,37 @@ export const salaryInfoRouter = router({
           },
         },
       });
-      return salaryInfo;
     }),
+
+  // bulkCreateSalaryInfos: protectedProcedure
+  //   .input(bulkCreateSalaryInfosSchema)
+  //   .mutation(async ({ ctx, input }) => {
+  //     const salaryInfo = await ctx.prisma.salaryInfo.createMany({
+  //       data: input.map((input) => ({
+  //         month: input.month,
+  //         user: {
+  //           connect: {
+  //             //既存のデータとの関連を作る
+  //             id: ctx.session?.user?.id,
+  //           },
+  //         },
+  //         term: {
+  //           connect: {
+  //             //既存のデータとの関連を作る
+  //             id: input.termId,
+  //           },
+  //         },
+  //       })),
+  //     });
+  //     return salaryInfo;
+  //   }),
 
   getSalaryInfos: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.salaryInfo.findMany({
       where: {
         userId: ctx.session?.user?.id,
       },
-      orderBy: {month: "desc"},
+      orderBy: { month: "desc" },
     });
   }),
 

@@ -23,3 +23,10 @@ export const getSingleTermSchema = z.object({
 export const deleteTermSchema = z.object({
   termId: z.string().cuid(),
 });
+
+export const selectedTermSchema = z.object({
+  termId: z.string().cuid(),
+  year: z.number().min(1900).max(nowYear),
+});
+
+export type selectedTermInput = z.TypeOf<typeof selectedTermSchema>;

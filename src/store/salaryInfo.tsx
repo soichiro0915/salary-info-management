@@ -5,10 +5,14 @@ type State = {
   editedSalaryInfo: updateSalaryInfoInput;
   updateEditedSalaryInfo: (payload: updateSalaryInfoInput) => void;
   resetEditedSalaryInfo: () => void;
+
+  selectedSalaryInfos: updateSalaryInfoInput[];
+  updateSelectedSalaryInfos: (payload: updateSalaryInfoInput[]) => void;
 };
 
 const useStore = create<State>((set) => ({
   editedSalaryInfo: {
+    id: "",
     salaryInfoId: "",
     month: 0,
     basicSalary: 0,
@@ -33,6 +37,7 @@ const useStore = create<State>((set) => ({
   resetEditedSalaryInfo: () =>
     set({
       editedSalaryInfo: {
+        id: "",
         salaryInfoId: "",
         month: 0,
         basicSalary: 0,
@@ -48,6 +53,12 @@ const useStore = create<State>((set) => ({
         federalLawPermits: 0,
         otherDeductin: 0,
       },
+    }),
+
+  selectedSalaryInfos: [],
+  updateSelectedSalaryInfos: (payload) =>
+    set({
+      selectedSalaryInfos: payload,
     }),
 }));
 

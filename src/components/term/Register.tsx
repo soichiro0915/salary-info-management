@@ -1,32 +1,36 @@
 import type { FormEvent } from "react";
-import useStore from "../../store/term";
-import { useMutateTerm } from "../../hooks/useMutateTerm";
 import dayjs from "dayjs";
+import useTermStore from "../../store/term";
+import { useMutateSalaryInfo } from "../../hooks/useMutateSalaryInfo";
+import { useMutateTerm } from "../../hooks/useMutateTerm";
 
 const nowYear = dayjs().year();
 
 export const TermRegister = () => {
-  const { createTermMutation, updateTermMutation } = useMutateTerm();
-  const { editedTerm } = useStore();
-  const update = useStore((state) => state.updateEditedTerm);
+  const { createTermMutation } = useMutateTerm();
+  const { createSalaryInfoMutation } = useMutateSalaryInfo();
+  const { editedTerm } = useTermStore();
+
+  const update = useTermStore((state) => state.updateEditedTerm);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (editedTerm.termId === "")
-      createTermMutation.mutate({
-        year: editedTerm.year,
+    createTermMutation.mutate({
+      year: editedTerm.year,
+    });
+    [...Array(12)]
+      .map((_, i) => i + 1)
+      .map((month) => {
+        createSalaryInfoMutation.mutate({
+          month: month,
+          termId: createTermMutation.data?.id || "",
+        });
       });
-    else {
-      updateTermMutation.mutate({
-        termId: editedTerm.termId,
-        year: editedTerm.year,
-      });
-    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="mb-5 text-center">
-      {(createTermMutation.isLoading || createTermMutation.isLoading) && (
+      {(createTermMutation.isLoading || createSalaryInfoMutation.isLoading) && (
         <p className="mb-2 text-green-500">Mutation under process...</p>
       )}
       <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -53,9 +57,12 @@ export const TermRegister = () => {
       </select>
       <p className="mb-3 text-red-500">
         {createTermMutation.error?.data?.zodError &&
-          createTermMutation.error.data.zodError.fieldErrors.year}
+          createTermMutation.error.data.zodError.fieldErrors.yea &&
+          createSalaryInfoMutation.error?.data?.zodError &&
+          createSalaryInfoMutation.error.data.zodError.fieldErrors.yearr}
       </p>
-      {createTermMutation.error?.data?.httpStatus === 500 && (
+      {(createTermMutation.error?.data?.httpStatus === 500 ||
+        createSalaryInfoMutation.error?.data?.httpStatus === 500) && (
         <p className="mb-3 text-red-500"> 追加できませんでした。</p>
       )}
       <p className="text-gray-500">注意　</p>

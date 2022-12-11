@@ -2,13 +2,20 @@ import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { Auth } from "../components/Auth";
 import { Layout } from "../components/Layout";
-import { SalaryInfoForm } from "../components/salaryInfo/Form";
-import { SalaryInfoList } from "../components/salaryInfo/List";
 import { TermRegister } from "../components/term/Register";
-import { TermList } from "../components/term/List";
+import { TermSelect } from "../components/term/Select";
+import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
+  const { data, isLoading, error } = trpc.salaryInfo.getSalaryInfos.useQuery();
+  
+  if (isLoading) {
+    return <p>Loading task list...</p>;
+  }
+  if (error) {
+    return <p>{error.message}</p>;
+  }
   if (!session) {
     return (
       <Layout title="Login">
@@ -26,10 +33,7 @@ const Home: NextPage = () => {
       </button>
       <p>{session?.user?.name}</p>
       <TermRegister />
-      <TermList />
-
-      {/* <SalaryInfoForm />
-      <SalaryInfoList /> */}
+      <TermSelect salalyInfos={data} />
     </Layout>
   );
 };
