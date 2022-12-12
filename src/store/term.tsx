@@ -8,6 +8,7 @@ type State = {
 
   selectedTerm: selectedTermInput;
   updateSelectedTerm: (payload: selectedTermInput) => void;
+  resetSelectedTerm: () => void;
 };
 
 const useStore = create<State>((set) => ({
@@ -37,6 +38,14 @@ const useStore = create<State>((set) => ({
   updateSelectedTerm: (payload) =>
     set({
       selectedTerm: payload,
+    }),
+
+  resetSelectedTerm: () =>
+    set({
+      selectedTerm: {
+        termId: "",
+        year: 0,
+      },
     }),
 }));
 

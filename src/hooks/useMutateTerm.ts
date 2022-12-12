@@ -6,6 +6,7 @@ export const useMutateTerm = () => {
   const utils = trpc.useContext();
 
   const reset = useStore((state) => state.resetEditedTerm);
+  const updateSelectedTerm = useStore((state) => state.updateSelectedTerm);
 
   const createTermMutation = trpc.term.createTerm.useMutation({
     //成功時にキャッシュを更新する
@@ -16,6 +17,7 @@ export const useMutateTerm = () => {
       }
       //編集中のデータをリセットする
       reset();
+      updateSelectedTerm({ termId: res.id, year: res.year });
     },
   });
 

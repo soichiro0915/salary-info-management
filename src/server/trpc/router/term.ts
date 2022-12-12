@@ -29,7 +29,7 @@ export const termRouter = router({
       where: {
         userId: ctx.session?.user?.id,
       },
-      orderBy: { year: "desc"},
+      orderBy: { year: "desc" },
     });
   }),
 
