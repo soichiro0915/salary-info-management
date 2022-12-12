@@ -2,6 +2,10 @@ import { trpc } from "../../utils/trpc";
 import useTermStore from "../../store/term";
 import useSalaryInfoStore from "../../store/salaryInfo";
 import { TermItem } from "./Item";
+import { Text, Paper } from "@mantine/core";
+import dayjs from "dayjs";
+
+const nowYear = dayjs().year();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TermSelect = (props: any) => {
@@ -13,13 +17,13 @@ export const TermSelect = (props: any) => {
   );
 
   if (isLoading) {
-    return <p>Loading task list...</p>;
+    return <Text>Loading task list...</Text>;
   }
   if (error) {
-    return <p>{error.message}</p>;
+    return <Text>{error.message}</Text>;
   }
   return (
-    <>
+    <Paper className="w-auto p-5 text-center">
       <select
         onChange={(e) => {
           select({
@@ -38,6 +42,7 @@ export const TermSelect = (props: any) => {
           );
         }}
         className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+        defaultValue={nowYear}
       >
         <option selected>-</option>
         {data?.map((term) => (
@@ -48,6 +53,6 @@ export const TermSelect = (props: any) => {
       </select>
 
       <TermItem />
-    </>
+    </Paper>
   );
 };

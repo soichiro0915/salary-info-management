@@ -6,6 +6,7 @@ import { Layout } from "../../../components/Layout";
 import type { FormEvent } from "react";
 import useStore from "../../../store/salaryInfo";
 import { useMutateSalaryInfo } from "../../../hooks/useMutateSalaryInfo";
+import { NumberInput, Button, Text, Paper } from "@mantine/core";
 
 const SingleSalaryInfoPage: NextPage = () => {
   const router = useRouter();
@@ -76,255 +77,240 @@ const SingleSalaryInfoPage: NextPage = () => {
 
   return (
     <Layout title="Task Detail">
-      <p>
-        {year}/{data?.month}
-      </p>
-      <form onSubmit={handleSubmit} className="mb-5 text-center">
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors.year &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors.month}
-        </p>
+      <Paper className="w-90 p-5 text-center">
+        <Text>
+          {year}/{data?.month}
+        </Text>
 
-        <h1>手取り {netIncome}円</h1>
+        <form onSubmit={handleSubmit} className="mb-5 text-center">
+          <Text className="mb-3 text-pink-500">
+            {updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors.year &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors.month}
+          </Text>
 
-        <h2>収入 {salary}円</h2>
+          <Text>手取り {netIncome}円</Text>
 
-        <label>基本給</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.basicSalary}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              basicSalary: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .basicSalary}
-        </p>
+          <Text>収入 {salary}円</Text>
 
-        <label>残業代</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.overtimePay}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              overtimePay: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .overtimePay}
-        </p>
+          <NumberInput
+            label="基本給"
+            value={editedSalaryInfo.basicSalary}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                basicSalary: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .basicSalary
+            }
+            hideControls
+          />
 
-        <label>各種手当</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.allowances}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              allowances: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors.allowances}
-        </p>
+          <NumberInput
+            label="残業代"
+            value={editedSalaryInfo.overtimePay}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                overtimePay: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .overtimePay
+            }
+            hideControls
+          />
 
-        <label>ボーナス</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.bonus}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              bonus: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors.bonus}
-        </p>
+          <NumberInput
+            label="各種手当"
+            value={editedSalaryInfo.allowances}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                allowances: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .allowances
+            }
+            hideControls
+          />
 
-        <label>その他</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.otherSalary}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              otherSalary: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .otherSalary}
-        </p>
+          <NumberInput
+            label="ボーナス"
+            value={editedSalaryInfo.bonus}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                bonus: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors.bonus
+            }
+            hideControls
+          />
 
-        <h2>控除　{deduction}円</h2>
+          <NumberInput
+            label="その他"
+            value={editedSalaryInfo.otherSalary}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                otherSalary: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .otherSalary
+            }
+            hideControls
+          />
 
-        <label>所得税</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.incomeTax}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              incomeTax: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors.incomeTax}
-        </p>
+          <Text>控除　{deduction}円</Text>
 
-        <label>住民税</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.residentTax}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              residentTax: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .residentTax}
-        </p>
+          <NumberInput
+            label="所得税"
+            value={editedSalaryInfo.incomeTax}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                incomeTax: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors.incomeTax
+            }
+            hideControls
+          />
 
-        <label>健康保険料</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.healthInsurancePremium}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              healthInsurancePremium: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .healthInsurancePremium}
-        </p>
+          <NumberInput
+            label="住民税"
+            value={editedSalaryInfo.residentTax}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                residentTax: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .residentTax
+            }
+            hideControls
+          />
 
-        <label>年金保険料</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.annuityPrice}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              annuityPrice: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .annuityPrice}
-        </p>
+          <NumberInput
+            label="健康保険料"
+            value={editedSalaryInfo.healthInsurancePremium}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                healthInsurancePremium: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .healthInsurancePremium
+            }
+            hideControls
+          />
 
-        <label>雇用保険料</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.employmentInsurancePremium}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              employmentInsurancePremium: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .employmentInsurancePremium}
-        </p>
+          <NumberInput
+            label="年金保険料"
+            value={editedSalaryInfo.annuityPrice}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                annuityPrice: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .annuityPrice
+            }
+            hideControls
+          />
 
-        <label>労働組合費</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.federalLawPermits}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              federalLawPermits: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .federalLawPermits}
-        </p>
+          <NumberInput
+            label="雇用保険料"
+            value={editedSalaryInfo.employmentInsurancePremium}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                employmentInsurancePremium: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .employmentInsurancePremium
+            }
+            hideControls
+          />
 
-        <label>その他</label>
-        <input
-          type="number"
-          className="mb-3 border border-gray-300 px-3 py-2"
-          value={editedSalaryInfo.otherDeductin}
-          onChange={(e) => {
-            update({
-              ...editedSalaryInfo,
-              otherDeductin: parseInt(e.target.value),
-            });
-          }}
-        />
-        <span>円</span>
-        <p className="mb-3 text-pink-500">
-          {updateSalaryInfoMutation.error?.data?.zodError &&
-            updateSalaryInfoMutation.error.data.zodError.fieldErrors
-              .otherDeductin}
-        </p>
+          <NumberInput
+            label="労働組合費"
+            value={editedSalaryInfo.federalLawPermits}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                federalLawPermits: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .federalLawPermits
+            }
+            hideControls
+          />
 
-        <button className="rounded bg-indigo-600 py-1 px-3 text-white hover:bg-opacity-80 focus:outline-none">
-          更新
-        </button>
+          <NumberInput
+            label="その他"
+            value={editedSalaryInfo.otherDeductin}
+            onChange={(value) => {
+              update({
+                ...editedSalaryInfo,
+                otherDeductin: value || 0,
+              });
+            }}
+            error={
+              updateSalaryInfoMutation.error?.data?.zodError &&
+              updateSalaryInfoMutation.error.data.zodError.fieldErrors
+                .otherDeductin
+            }
+            hideControls
+          />
 
-        {updateSalaryInfoMutation.isLoading && (
-          <p className="mb-2 text-green-500">Mutation under process...</p>
-        )}
-      </form>
+          <Button
+            className="mt-6 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+            type="submit"
+          >
+            更新
+          </Button>
+
+          {updateSalaryInfoMutation.isLoading && (
+            <Text className="mb-2 text-green-500">
+              Mutation under process...
+            </Text>
+          )}
+        </form>
+      </Paper>
     </Layout>
   );
 };

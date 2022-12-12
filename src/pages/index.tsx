@@ -5,6 +5,7 @@ import { Layout } from "../components/Layout";
 import { TermRegister } from "../components/term/Register";
 import { TermSelect } from "../components/term/Select";
 import { trpc } from "../utils/trpc";
+import { Text, Button } from "@mantine/core";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -19,13 +20,13 @@ const Home: NextPage = () => {
   }
   return (
     <Layout title="Salary Info Management App">
-      <button
+      <Button
         className="rounded bg-blue-600 py-2 px-4 font-bold text-white hover:bg-blue-800"
         onClick={() => signOut()}
       >
         SignOut
-      </button>
-      <p>{session?.user?.name}</p>
+      </Button>
+      <Text>{session?.user?.name}</Text>
       <TermRegister />
       <TermSelect salalyInfos={data} />
     </Layout>

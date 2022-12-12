@@ -1,9 +1,11 @@
 import type { FC } from "react";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import useTermStore from "../../store/term";
 import useSalaryInfoStore from "../../store/salaryInfo";
+import { Text, Button, Table } from "@mantine/core";
 
 export const TermItem: FC = () => {
+  const router = useRouter();
   const { selectedTerm } = useTermStore();
   const { selectedSalaryInfos } = useSalaryInfoStore();
 
@@ -31,88 +33,109 @@ export const TermItem: FC = () => {
   );
   const netIncome = salary - deduction;
 
+  const list = [...Array(12)]
+    .map((_, i) => i + 1)
+    .map((month) => {
+      return selectedSalaryInfos?.find(
+        (salaryInfo) => salaryInfo.month === month
+      );
+    })
+    .map((salaryInfo) => {
+      if (!salaryInfo) {
+        return;
+      }
+      return {
+        salaryInfoId: salaryInfo?.id || "",
+        month: salaryInfo?.month || 0,
+        salary: (
+          (salaryInfo?.incomeTax || 0) +
+          (salaryInfo?.residentTax || 0) +
+          (salaryInfo?.healthInsurancePremium || 0) +
+          (salaryInfo?.annuityPrice || 0) +
+          (salaryInfo?.employmentInsurancePremium || 0) +
+          (salaryInfo?.federalLawPermits || 0) +
+          (salaryInfo?.otherDeductin || 0)
+        ).toLocaleString(),
+        deduction: (
+          (salaryInfo?.incomeTax || 0) +
+          (salaryInfo?.residentTax || 0) +
+          (salaryInfo?.healthInsurancePremium || 0) +
+          (salaryInfo?.annuityPrice || 0) +
+          (salaryInfo?.employmentInsurancePremium || 0) +
+          (salaryInfo?.federalLawPermits || 0) +
+          (salaryInfo?.otherDeductin || 0)
+        ).toLocaleString(),
+        netIncome: (
+          (salaryInfo?.incomeTax || 0) +
+          (salaryInfo?.residentTax || 0) +
+          (salaryInfo?.healthInsurancePremium || 0) +
+          (salaryInfo?.annuityPrice || 0) +
+          (salaryInfo?.employmentInsurancePremium || 0) +
+          (salaryInfo?.federalLawPermits || 0) +
+          (salaryInfo?.otherDeductin || 0) -
+          ((salaryInfo?.incomeTax || 0) +
+            (salaryInfo?.residentTax || 0) +
+            (salaryInfo?.healthInsurancePremium || 0) +
+            (salaryInfo?.annuityPrice || 0) +
+            (salaryInfo?.employmentInsurancePremium || 0) +
+            (salaryInfo?.federalLawPermits || 0) +
+            (salaryInfo?.otherDeductin || 0))
+        ).toLocaleString(),
+      };
+    })
+    .filter(Boolean);
+
   return (
     <>
       <div className="flex w-full justify-between rounded-lg border border-gray-200 bg-white p-6 shadow-md hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div>
-          <p>収入</p>
-          <p>{salary?.toLocaleString()}円</p>
+          <Text>収入</Text>
+          <Text>{salary?.toLocaleString()}円</Text>
         </div>
         <div>
-          <p>控除</p>
-          <p>{deduction?.toLocaleString()}円</p>
+          <Text>控除</Text>
+          <Text>{deduction?.toLocaleString()}円</Text>
         </div>
         <div>
-          <p>手取り</p>
-          <p>{netIncome.toLocaleString()}円</p>
+          <Text>手取り</Text>
+          <Text>{netIncome.toLocaleString()}円</Text>
         </div>
       </div>
-
-      <div className="flex">
-        <p className="text-blue-500">月</p>
-        <p>収入</p>
-        <p>控除</p>
-        <p>手取り</p>
-      </div>
-
-      {[...Array(12)]
-        .map((_, i) => i + 1)
-        .map((month) => {
-          return selectedSalaryInfos?.map((salaryInfo) => {
-            return (
-              salaryInfo.month === month && (
-                <Link
-                  key={month}
-                  href={"/" + selectedTerm.year + "/" + salaryInfo.id}
-                  className="flex cursor-pointer"
-                >
-                  <p className="text-red-600 hover:text-opacity-50">
-                    {month}月
-                  </p>
-                  <p>
-                    {(
-                      salaryInfo.basicSalary +
-                      salaryInfo.overtimePay +
-                      salaryInfo.allowances +
-                      salaryInfo.bonus +
-                      salaryInfo.otherSalary
-                    ).toLocaleString()}
-                    円
-                  </p>
-                  <p>
-                    {(
-                      salaryInfo.incomeTax +
-                      salaryInfo.residentTax +
-                      salaryInfo.healthInsurancePremium +
-                      salaryInfo.annuityPrice +
-                      salaryInfo.employmentInsurancePremium +
-                      salaryInfo.federalLawPermits +
-                      salaryInfo.otherDeductin
-                    ).toLocaleString()}
-                    円
-                  </p>
-                  <p>
-                    {(
-                      salaryInfo.basicSalary +
-                      salaryInfo.overtimePay +
-                      salaryInfo.allowances +
-                      salaryInfo.bonus +
-                      salaryInfo.otherSalary -
-                      (salaryInfo.incomeTax +
-                        salaryInfo.residentTax +
-                        salaryInfo.healthInsurancePremium +
-                        salaryInfo.annuityPrice +
-                        salaryInfo.employmentInsurancePremium +
-                        salaryInfo.federalLawPermits +
-                        salaryInfo.otherDeductin)
-                    ).toLocaleString()}
-                    円
-                  </p>
-                </Link>
-              )
-            );
-          });
-        })}
+      {list.length > 0 && (
+        <Table>
+          <thead>
+            <tr>
+              <th className="text-center">月</th>
+              <th className="text-center">収入</th>
+              <th>控除</th>
+              <th>手取り</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((element) => (
+              <tr key={element?.month}>
+                <td className="text-center">{element?.month + "月"}</td>
+                <td>{element?.salary.toLocaleString() + "円"}</td>
+                <td>{element?.deduction.toLocaleString() + "円"}</td>
+                <td>{element?.netIncome.toLocaleString() + "円"}</td>
+                <td>
+                  <Button
+                    className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                    onClick={() =>
+                      router.push(
+                        `/${selectedTerm.year}/${element?.salaryInfoId}`
+                      )
+                    }
+                  >
+                    詳細
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
     </>
   );
 };

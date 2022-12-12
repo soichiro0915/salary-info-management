@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import useTermStore from "../../store/term";
 import { useMutateSalaryInfo } from "../../hooks/useMutateSalaryInfo";
 import { useMutateTerm } from "../../hooks/useMutateTerm";
+import { Button, Text } from "@mantine/core";
 
 const nowYear = dayjs().year();
 
@@ -31,7 +32,7 @@ export const TermRegister = () => {
   return (
     <form onSubmit={handleSubmit} className="mb-5 text-center">
       {(createTermMutation.isLoading || createSalaryInfoMutation.isLoading) && (
-        <p className="mb-2 text-green-500">Mutation under process...</p>
+        <Text className="mb-2 text-green-500">Mutation under process...</Text>
       )}
       <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
         何年のデータを追加しますか？
@@ -55,23 +56,23 @@ export const TermRegister = () => {
             </option>
           ))}
       </select>
-      <p className="mb-3 text-red-500">
+      <Text className="mb-3 text-red-500">
         {createTermMutation.error?.data?.zodError &&
           createTermMutation.error.data.zodError.fieldErrors.yea &&
           createSalaryInfoMutation.error?.data?.zodError &&
           createSalaryInfoMutation.error.data.zodError.fieldErrors.yearr}
-      </p>
+      </Text>
       {(createTermMutation.error?.data?.httpStatus === 500 ||
         createSalaryInfoMutation.error?.data?.httpStatus === 500) && (
-        <p className="mb-3 text-red-500"> 追加できませんでした。</p>
+        <Text className="mb-3 text-red-500"> 追加できませんでした。</Text>
       )}
-      <p className="text-gray-500">注意　</p>
-      <p className="mb-3 text-sm text-gray-500">
+      <Text className="text-gray-500">注意　</Text>
+      <Text className="mb-3 text-sm text-gray-500">
         重複する年度は追加することができません。
-      </p>
-      <button className="rounded bg-indigo-600 py-1 px-3 text-white hover:bg-opacity-80 focus:outline-none">
+      </Text>
+      <Button className="rounded bg-indigo-600 py-1 px-3 text-white hover:bg-opacity-80 focus:outline-none">
         追加
-      </button>
+      </Button>
     </form>
   );
 };
