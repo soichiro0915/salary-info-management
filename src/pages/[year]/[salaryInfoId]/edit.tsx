@@ -20,23 +20,7 @@ const SingleSalaryInfoPage: NextPage = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateSalaryInfoMutation.mutate({
-      id: editedSalaryInfo.id,
-      salaryInfoId: editedSalaryInfo.id,
-      month: editedSalaryInfo.month,
-      basicSalary: editedSalaryInfo.basicSalary,
-      overtimePay: editedSalaryInfo.overtimePay,
-      allowances: editedSalaryInfo.allowances,
-      bonus: editedSalaryInfo.bonus,
-      otherSalary: editedSalaryInfo.otherSalary,
-      incomeTax: editedSalaryInfo.incomeTax,
-      residentTax: editedSalaryInfo.residentTax,
-      healthInsurancePremium: editedSalaryInfo.healthInsurancePremium,
-      annuityPrice: editedSalaryInfo.annuityPrice,
-      employmentInsurancePremium: editedSalaryInfo.employmentInsurancePremium,
-      federalLawPermits: editedSalaryInfo.federalLawPermits,
-      otherDeductin: editedSalaryInfo.otherDeductin,
-    });
+    updateSalaryInfoMutation.mutate(editedSalaryInfo);
   };
 
   useEffect(() => {

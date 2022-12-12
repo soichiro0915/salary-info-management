@@ -85,6 +85,14 @@ export const salaryInfoRouter = router({
           overtimePay: input.overtimePay,
           allowances: input.allowances,
           bonus: input.bonus,
+          otherSalary: input.allowances,
+          incomeTax: input.incomeTax,
+          residentTax: input.residentTax,
+          healthInsurancePremium: input.healthInsurancePremium,
+          annuityPrice: input.annuityPrice,
+          employmentInsurancePremium: input.employmentInsurancePremium,
+          federalLawPermits: input.federalLawPermits,
+          otherDeductin: input.otherDeductin,
         },
       });
       return salaryInfo;
