@@ -5,7 +5,7 @@ import { Layout } from "../components/Layout";
 import { TermRegisterModal } from "../components/term/RegisterModal";
 import { TermSelect } from "../components/term/Select";
 import { trpc } from "../utils/trpc";
-import { Text, Button } from "@mantine/core";
+import { Text, Button, Flex, Paper } from "@mantine/core";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -20,18 +20,20 @@ const Home: NextPage = () => {
   }
   return (
     <Layout title="Salary Info Management App">
-      <div className="flex items-center justify-between my-4 px-3">
-        <Text>{session?.user?.name}</Text>
-        <Button
-          className="rounded bg-blue-600 py-2 px-4 font-bold text-white hover:bg-blue-800 mx-4"
-          onClick={() => signOut()}
-        >
-          SignOut
-        </Button>
-        <TermRegisterModal />
-      </div>
+      <Paper>
+        <Flex className="my-4 flex items-center justify-between px-3">
+          <Text>{session?.user?.name}</Text>
+          <Button
+            className="mx-4 rounded bg-blue-600 py-2 px-4 font-bold text-white hover:bg-blue-800"
+            onClick={() => signOut()}
+          >
+            SignOut
+          </Button>
+          <TermRegisterModal />
+        </Flex>
 
-      <TermSelect salalyInfos={data} />
+        <TermSelect salalyInfos={data} />
+      </Paper>
     </Layout>
   );
 };

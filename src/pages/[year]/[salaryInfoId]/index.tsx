@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Text, Paper, Table, Flex } from "@mantine/core";
+import { Text, Paper, Table, Flex, Grid } from "@mantine/core";
 import dayjs from "dayjs";
 
 import { trpc } from "../../../utils/trpc";
@@ -111,8 +111,8 @@ const SingleSalaryInfoPage: NextPage = () => {
     return <Layout title="Task Detail">{error.message}</Layout>;
   }
   return (
-    <Layout title="Task Detail">
-      <Paper className="w-90 p-5 text-center">
+    <Layout title="salalyInfo Detail">
+      <Paper className="p-5 text-center">
         <Flex gap="md" justify="center" align="center">
           <Text className="text-xl font-bold text-blue-600">
             {year + "/" + data?.month}
