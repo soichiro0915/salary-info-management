@@ -127,6 +127,7 @@ export const TermItem: FC = () => {
                         `/${selectedTerm.year}/${element?.salaryInfoId}`
                       )
                     }
+                    disabled={!element?.salaryInfoId}
                   >
                     詳細
                   </Button>

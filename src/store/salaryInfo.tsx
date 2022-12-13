@@ -55,7 +55,27 @@ const useStore = create<State>((set) => ({
       },
     }),
 
-  selectedSalaryInfos: [],
+  selectedSalaryInfos: [...Array(12)]
+    .map((_, i) => i + 1)
+    .map((month) => {
+      return {
+        id: "",
+        salaryInfoId: "",
+        month: month,
+        basicSalary: 0,
+        overtimePay: 0,
+        allowances: 0,
+        bonus: 0,
+        otherSalary: 0,
+        incomeTax: 0,
+        residentTax: 0,
+        healthInsurancePremium: 0,
+        annuityPrice: 0,
+        employmentInsurancePremium: 0,
+        federalLawPermits: 0,
+        otherDeductin: 0,
+      };
+    }),
   updateSelectedSalaryInfos: (payload) =>
     set({
       selectedSalaryInfos: payload,
