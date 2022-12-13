@@ -1,56 +1,31 @@
-import { useEffect } from "react";
-import type { NextPage } from "next";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import { trpc } from "../../../utils/trpc";
-import { Layout } from "../../../components/Layout";
-import type { FormEvent } from "react";
-import useStore from "../../../store/salaryInfo";
-import { useMutateSalaryInfo } from "../../../hooks/useMutateSalaryInfo";
-import { NumberInput, Button, Text, Paper } from "@mantine/core";
+import { NumberInput, Text, Button, Modal } from "@mantine/core";
 
-const SingleSalaryInfoPage: NextPage = () => {
+import { useMutateSalaryInfo } from "../../hooks/useMutateSalaryInfo";
+import useStore from "../../store/salaryInfo";
+
+import type { FormEvent } from "react";
+
+const UpdateSalalyInfoModal = () => {
   const router = useRouter();
-  const { year, salaryInfoId } = router.query;
-  const { data, isLoading, error } =
-    trpc.salaryInfo.getSingleSalaryInfo.useQuery({
-      salaryInfoId: salaryInfoId as string,
-    });
+  const { year } = router.query;
+  const [modalOpen, setModalOpen] = useState(false);
   const { updateSalaryInfoMutation } = useMutateSalaryInfo();
   const { editedSalaryInfo } = useStore();
-  const update = useStore((state) => state.updateEditedSalaryInfo);
+  const updateDisplaySalaryInfo = useStore(
+    (state) => state.updateDisplaySalaryInfo
+  );
+  const updateEditedSalaryInfo = useStore(
+    (state) => state.updateEditedSalaryInfo
+  );
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateSalaryInfoMutation.mutate(editedSalaryInfo);
+    updateDisplaySalaryInfo(editedSalaryInfo);
+    setModalOpen(false);
   };
-
-  useEffect(() => {
-    update({
-      id: data?.id || "",
-      salaryInfoId: data?.id || "",
-      month: data?.month || 0,
-      basicSalary: data?.basicSalary || 0,
-      overtimePay: data?.overtimePay || 0,
-      allowances: data?.allowances || 0,
-      bonus: data?.bonus || 0,
-      otherSalary: data?.otherSalary || 0,
-      incomeTax: data?.incomeTax || 0,
-      residentTax: data?.residentTax || 0,
-      healthInsurancePremium: data?.healthInsurancePremium || 0,
-      annuityPrice: data?.annuityPrice || 0,
-      employmentInsurancePremium: data?.employmentInsurancePremium || 0,
-      federalLawPermits: data?.federalLawPermits || 0,
-      otherDeductin: data?.otherDeductin || 0,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (updateSalaryInfoMutation.isSuccess) {
-      router.push(`/${year}/${salaryInfoId}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateSalaryInfoMutation.isSuccess]);
 
   const salary =
     editedSalaryInfo.basicSalary +
@@ -68,18 +43,18 @@ const SingleSalaryInfoPage: NextPage = () => {
     editedSalaryInfo.otherDeductin;
   const netIncome = salary - deduction;
 
-  if (isLoading) {
-    return <Layout title="Task Detail">Loading single task...</Layout>;
-  }
-  if (error) {
-    return <Layout title="Task Detail">{error.message}</Layout>;
-  }
-
   return (
-    <Layout title="Task Detail">
-      <Paper className="w-90 p-5 text-center">
-        <Text>
-          {year}/{data?.month}
+    <>
+      <Button
+        className="rounded bg-blue-600 py-2 px-4 font-bold text-white hover:bg-blue-800"
+        onClick={() => setModalOpen(true)}
+      >
+        編集
+      </Button>
+
+      <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
+        <Text className="text-center">
+          {year}/{editedSalaryInfo?.month}
         </Text>
 
         <form onSubmit={handleSubmit} className="mb-5 text-center">
@@ -97,7 +72,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="基本給"
             value={editedSalaryInfo.basicSalary}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 basicSalary: value || 0,
               });
@@ -114,7 +89,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="残業代"
             value={editedSalaryInfo.overtimePay}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 overtimePay: value || 0,
               });
@@ -131,7 +106,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="各種手当"
             value={editedSalaryInfo.allowances}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 allowances: value || 0,
               });
@@ -148,7 +123,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="ボーナス"
             value={editedSalaryInfo.bonus}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 bonus: value || 0,
               });
@@ -164,7 +139,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="その他"
             value={editedSalaryInfo.otherSalary}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 otherSalary: value || 0,
               });
@@ -177,13 +152,13 @@ const SingleSalaryInfoPage: NextPage = () => {
             hideControls
           />
 
-          <Text>控除　{deduction}円</Text>
+          <Text>控除 {deduction}円</Text>
 
           <NumberInput
             label="所得税"
             value={editedSalaryInfo.incomeTax}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 incomeTax: value || 0,
               });
@@ -199,7 +174,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="住民税"
             value={editedSalaryInfo.residentTax}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 residentTax: value || 0,
               });
@@ -216,7 +191,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="健康保険料"
             value={editedSalaryInfo.healthInsurancePremium}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 healthInsurancePremium: value || 0,
               });
@@ -233,7 +208,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="年金保険料"
             value={editedSalaryInfo.annuityPrice}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 annuityPrice: value || 0,
               });
@@ -250,7 +225,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="雇用保険料"
             value={editedSalaryInfo.employmentInsurancePremium}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 employmentInsurancePremium: value || 0,
               });
@@ -267,7 +242,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="労働組合費"
             value={editedSalaryInfo.federalLawPermits}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 federalLawPermits: value || 0,
               });
@@ -284,7 +259,7 @@ const SingleSalaryInfoPage: NextPage = () => {
             label="その他"
             value={editedSalaryInfo.otherDeductin}
             onChange={(value) => {
-              update({
+              updateEditedSalaryInfo({
                 ...editedSalaryInfo,
                 otherDeductin: value || 0,
               });
@@ -310,8 +285,8 @@ const SingleSalaryInfoPage: NextPage = () => {
             </Text>
           )}
         </form>
-      </Paper>
-    </Layout>
+      </Modal>
+    </>
   );
 };
-export default SingleSalaryInfoPage;
+export default UpdateSalalyInfoModal;

@@ -22,9 +22,6 @@ export const useMutateSalaryInfo = () => {
     }
   );
 
-  // const bulkCreateSalaryInfosMutation =
-  //   trpc.salaryInfo.bulkCreateSalaryInfos.useMutation();
-
   const updateSalaryInfoMutation = trpc.salaryInfo.updateSalaryInfo.useMutation(
     {
       //成功時にキャッシュを更新する
@@ -63,7 +60,6 @@ export const useMutateSalaryInfo = () => {
 
   return {
     createSalaryInfoMutation,
-    // bulkCreateSalaryInfosMutation,
     updateSalaryInfoMutation,
     deleteSalaryInfoMutation,
   };
