@@ -27,12 +27,6 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
-## Table of contents
-
-- <a href="#about">About T3 Stack</a>
-- <a href="#architecture">Architecture of Todo App</a>
-- <a href="#project-setup">Project setup</a>
-
 <h2 id="about">About T3 Stack</h2>
 
 "T3 Stack" consists of following tech and enable full stack type-safe web development speedy and simple.
@@ -43,10 +37,6 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [TypeScript](https://typescriptlang.org)
 - [Prisma](https://prisma.io)
 - [NextAuth.js](https://next-auth.js.org)
-
-<h2 id="architecture">Architecture of Todo App</h2>
-
-<img src="./architecture.png" width="700px"/>
 
 <h2 id="project-setup">Project setup</h2>
 
