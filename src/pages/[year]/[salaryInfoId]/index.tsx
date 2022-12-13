@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Text, Paper, Table, Flex, Grid } from "@mantine/core";
+import { Text, Paper, Table, Flex } from "@mantine/core";
 import dayjs from "dayjs";
 
 import { trpc } from "../../../utils/trpc";

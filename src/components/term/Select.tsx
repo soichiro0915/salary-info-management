@@ -2,7 +2,7 @@ import { trpc } from "../../utils/trpc";
 import useTermStore from "../../store/term";
 import useSalaryInfoStore from "../../store/salaryInfo";
 import { TermItem } from "./Item";
-import { Text, Paper} from "@mantine/core";
+import { Text, Paper } from "@mantine/core";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TermSelect = (props: any) => {
@@ -14,10 +14,10 @@ export const TermSelect = (props: any) => {
   );
 
   if (isLoading) {
-    return <Text>Loading task list...</Text>;
+    return <Text className="text-center">Loading task list...</Text>;
   }
   if (error) {
-    return <Text>{error.message}</Text>;
+    return <Text className="text-center">{error.message}</Text>;
   }
   return (
     <Paper className="w-auto p-5 text-center">
