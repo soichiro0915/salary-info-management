@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
+import { Text, Button, Flex, Paper } from "@mantine/core";
+
 import { Auth } from "../components/Auth";
 import { Layout } from "../components/Layout";
 import { TermRegisterModal } from "../components/term/RegisterModal";
 import { TermSelect } from "../components/term/Select";
 import { trpc } from "../utils/trpc";
-import { Text, Button, Flex, Paper } from "@mantine/core";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
