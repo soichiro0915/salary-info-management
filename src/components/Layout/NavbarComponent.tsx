@@ -1,6 +1,11 @@
+import type { VFC } from "react";
 import { Navbar, Text } from "@mantine/core";
 
-export const NavbarComponent = ({ navbarOpened }) => {
+interface Props {
+  navbarOpened: boolean;
+}
+
+export const NavbarComponent: VFC<Props> = ({ navbarOpened }) => {
   return (
     <Navbar
       p="md"

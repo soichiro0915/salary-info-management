@@ -1,6 +1,15 @@
+import type { VFC } from "react";
 import { Header, MediaQuery, Burger, Text } from "@mantine/core";
 
-export const HeaderComponent = ({ navbarOpened, setNavbarOpened }) => {
+interface Props {
+  navbarOpened: boolean;
+  setNavbarOpened: (navbarOpened: boolean) => void;
+}
+
+export const HeaderComponent: VFC<Props> = ({
+  navbarOpened,
+  setNavbarOpened,
+}) => {
   return (
     <Header height={{ base: 50, md: 70 }} p="md">
       <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
