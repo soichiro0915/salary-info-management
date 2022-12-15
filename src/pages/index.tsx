@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import { signOut, useSession } from "next-auth/react";
-import { Text, Button, Flex, Paper } from "@mantine/core";
+import { useSession } from "next-auth/react";
+import { Paper, Center } from "@mantine/core";
 
 import { Auth } from "../components/Auth";
 import { Layout } from "../components/Layout";
@@ -21,17 +21,10 @@ const Home: NextPage = () => {
   }
   return (
     <Layout title="Salary Info Management App">
-      <Paper>
-        <Flex className="my-4 flex items-center justify-between px-3">
-          <Text>{session?.user?.name}</Text>
-          <Button
-            className="mx-4 rounded bg-blue-600 py-2 px-4 font-bold text-white hover:bg-blue-800"
-            onClick={() => signOut()}
-          >
-            SignOut
-          </Button>
+      <Paper className='pt-4'>
+        <Center>
           <TermRegisterModal />
-        </Flex>
+        </Center>
 
         <TermSelect salalyInfos={data} />
       </Paper>

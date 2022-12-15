@@ -1,5 +1,6 @@
 import type { VFC } from "react";
-import { Header, MediaQuery, Burger, Text } from "@mantine/core";
+import { signOut, useSession } from "next-auth/react";
+import { Header, MediaQuery, Burger, Text, Button, Flex } from "@mantine/core";
 
 interface Props {
   navbarOpened: boolean;
@@ -10,9 +11,11 @@ export const HeaderComponent: VFC<Props> = ({
   navbarOpened,
   setNavbarOpened,
 }) => {
+  const { data: session } = useSession();
+
   return (
-    <Header height={{ base: 50, md: 70 }} p="md">
-      <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+    <Header className="flex items-center" height={60} p="xs">
+      <Flex>
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
           <Burger
             opened={navbarOpened}
@@ -22,8 +25,26 @@ export const HeaderComponent: VFC<Props> = ({
           />
         </MediaQuery>
 
-        <Text>Application header</Text>
-      </div>
+        <Text>Salaly Info Management App</Text>
+      </Flex>
+
+      {session && (
+        <Flex
+          className="ml-auto"
+          gap="md"
+          justify="between"
+          align="center"
+          direction="row"
+        >
+          <Text>{session?.user?.name}</Text>
+          <Button
+            className="mx-4 rounded bg-blue-600 font-bold text-white hover:bg-blue-800"
+            onClick={() => signOut()}
+          >
+            SignOut
+          </Button>
+        </Flex>
+      )}
     </Header>
   );
 };
