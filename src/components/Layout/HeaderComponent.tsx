@@ -21,24 +21,25 @@ export const HeaderComponent: VFC<Props> = ({
             opened={navbarOpened}
             onClick={() => setNavbarOpened(!navbarOpened)}
             size="sm"
-            mr="xl"
+            mr='xs'
           />
         </MediaQuery>
 
-        <Text>Salaly Info Management App</Text>
+        <Text >給与情報管理</Text>
       </Flex>
 
       {session && (
         <Flex
           className="ml-auto"
-          gap="md"
           justify="between"
           align="center"
           direction="row"
+          gap='xs'
+         
         >
           <Text>{session?.user?.name}</Text>
           <Button
-            className="mx-4 rounded bg-blue-600 font-bold text-white hover:bg-blue-800"
+            className="rounded bg-blue-600 font-bold text-white hover:bg-blue-800"
             onClick={() => signOut()}
           >
             SignOut
