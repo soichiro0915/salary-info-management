@@ -48,13 +48,11 @@ export const TermItem: FC = () => {
         salaryInfoId: salaryInfo?.id || "",
         month: salaryInfo?.month || 0,
         salary: (
-          (salaryInfo?.incomeTax || 0) +
-          (salaryInfo?.residentTax || 0) +
-          (salaryInfo?.healthInsurancePremium || 0) +
-          (salaryInfo?.annuityPrice || 0) +
-          (salaryInfo?.employmentInsurancePremium || 0) +
-          (salaryInfo?.federalLawPermits || 0) +
-          (salaryInfo?.otherDeductin || 0)
+          (salaryInfo?.basicSalary || 0) +
+          (salaryInfo?.overtimePay || 0) +
+          (salaryInfo?.allowances || 0) +
+          (salaryInfo?.bonus || 0) +
+          (salaryInfo?.otherSalary || 0)
         ).toLocaleString(),
         deduction: (
           (salaryInfo?.incomeTax || 0) +
@@ -87,7 +85,7 @@ export const TermItem: FC = () => {
 
   return (
     <>
-      <div className="mt-5 mb-5 flex w-full justify-around rounded-lg border border-gray-200 bg-white shadow-md hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 py-2">
+      <div className="mt-5 mb-5 flex w-full justify-around rounded-lg border border-gray-200 bg-white py-2 shadow-md hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div>
           <Text>収入</Text>
           <Text>{salary?.toLocaleString()}円</Text>
@@ -123,9 +121,7 @@ export const TermItem: FC = () => {
                   <Button
                     className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
                     onClick={() =>
-                      router.push(
-                        `/${selectedTerm.year}/${element?.salaryInfoId}`
-                      )
+                      router.push(`/${selectedTerm.year}/${element?.month}`)
                     }
                     disabled={!element?.salaryInfoId}
                   >

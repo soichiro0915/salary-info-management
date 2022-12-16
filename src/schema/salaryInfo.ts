@@ -15,7 +15,6 @@ export type BulkCreateSalaryInfosInput = z.TypeOf<
 
 export const updateSalaryInfoSchema = z.object({
   id: z.string().cuid(),
-  salaryInfoId: z.string().cuid(),
   month: z.number().min(1).max(12),
   basicSalary: z.number().min(0).max(10000000000),
   overtimePay: z.number().min(0).max(10000000000),
@@ -35,6 +34,11 @@ export type updateSalaryInfoInput = z.TypeOf<typeof updateSalaryInfoSchema>;
 
 export const getSingleSalaryInfoSchema = z.object({
   salaryInfoId: z.string().cuid(),
+});
+
+export const getSingleSalalyInfoByTermIdAndMonthSchema = z.object({
+  termId: z.string().cuid(),
+  month: z.number().min(1).max(12),
 });
 
 export const deleteSalaryInfoSchema = z.object({

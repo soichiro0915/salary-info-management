@@ -6,7 +6,8 @@ import dayjs from "dayjs";
 
 import { trpc } from "../../../utils/trpc";
 import { Layout } from "../../../components/Layout";
-import useStore from "../../../store/salaryInfo";
+import useSalalyInfoStore from "../../../store/salaryInfo";
+import useTermStore from "../../../store/term";
 
 import type { NextPage } from "next";
 
@@ -14,54 +15,28 @@ import UpdateSalalyInfoModal from "../../../components/salaryInfo/UpdateModal";
 
 const SingleSalaryInfoPage: NextPage = () => {
   const router = useRouter();
-  const { year, salaryInfoId } = router.query;
+  const { year, month } = router.query;
+  const { selectedTerm } = useTermStore();
   const { data, isLoading, error } =
-    trpc.salaryInfo.getSingleSalaryInfo.useQuery({
-      salaryInfoId: salaryInfoId as string,
+    trpc.salaryInfo.getSingleSalalyInfoByTermIdAndMonth.useQuery({
+      termId: selectedTerm.termId as cuid,
+      month: parseInt(month) as number,
     });
-  const { diplaySalalyInfo } = useStore();
-  const updateEditedSalaryInfo = useStore(
+  const { diplaySalalyInfo } = useSalalyInfoStore();
+  const updateEditedSalaryInfo = useSalalyInfoStore(
     (state) => state.updateEditedSalaryInfo
   );
-  const updateDisplaySalaryInfo = useStore(
+  const updateDisplaySalaryInfo = useSalalyInfoStore(
     (state) => state.updateDisplaySalaryInfo
   );
 
   useEffect(() => {
     if (!isLoading && data) {
       updateEditedSalaryInfo({
-        id: data?.id || "",
-        salaryInfoId: data?.id || "",
-        month: data?.month || 0,
-        basicSalary: data?.basicSalary || 0,
-        overtimePay: data?.overtimePay || 0,
-        allowances: data?.allowances || 0,
-        bonus: data?.bonus || 0,
-        otherSalary: data?.otherSalary || 0,
-        incomeTax: data?.incomeTax || 0,
-        residentTax: data?.residentTax || 0,
-        healthInsurancePremium: data?.healthInsurancePremium || 0,
-        annuityPrice: data?.annuityPrice || 0,
-        employmentInsurancePremium: data?.employmentInsurancePremium || 0,
-        federalLawPermits: data?.federalLawPermits || 0,
-        otherDeductin: data?.otherDeductin || 0,
+        ...data,
       });
       updateDisplaySalaryInfo({
-        id: data?.id || "",
-        salaryInfoId: data?.id || "",
-        month: data?.month || 0,
-        basicSalary: data?.basicSalary || 0,
-        overtimePay: data?.overtimePay || 0,
-        allowances: data?.allowances || 0,
-        bonus: data?.bonus || 0,
-        otherSalary: data?.otherSalary || 0,
-        incomeTax: data?.incomeTax || 0,
-        residentTax: data?.residentTax || 0,
-        healthInsurancePremium: data?.healthInsurancePremium || 0,
-        annuityPrice: data?.annuityPrice || 0,
-        employmentInsurancePremium: data?.employmentInsurancePremium || 0,
-        federalLawPermits: data?.federalLawPermits || 0,
-        otherDeductin: data?.otherDeductin || 0,
+        ...data,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +75,7 @@ const SingleSalaryInfoPage: NextPage = () => {
       title: "雇用保険料",
       value: diplaySalalyInfo.employmentInsurancePremium,
     },
-    { title: "法定手当", value: diplaySalalyInfo.federalLawPermits },
+    { title: "労働組合費", value: diplaySalalyInfo.federalLawPermits },
     { title: "その他控除", value: diplaySalalyInfo.otherDeductin },
   ];
 
@@ -108,14 +83,21 @@ const SingleSalaryInfoPage: NextPage = () => {
     return <Layout title="Task Detail">Loading single task...</Layout>;
   }
   if (error) {
-    return <Layout title="Task Detail">{error.message}</Layout>;
+    return (
+      <Layout title="Task Detail">
+        <Text>情報取得に失敗しました。</Text>
+        <Link href={`/`}>
+          <Text className="text-blue-400 hover:text-blue-700">Home</Text>
+        </Link>
+      </Layout>
+    );
   }
   return (
     <Layout title="salalyInfo Detail">
       <Paper className="p-5 text-center">
         <Flex gap="md" justify="center" align="center">
           <Text className="text-xl font-bold text-blue-600">
-            {year + "/" + data?.month}
+            {year + "/" + month}
           </Text>
           <UpdateSalalyInfoModal />
         </Flex>
@@ -154,7 +136,7 @@ const SingleSalaryInfoPage: NextPage = () => {
           更新日 {data && dayjs(data?.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
         </Text>
         <Link href={`/`}>
-          <Text className="text-blue-400 hover:text-blue-700">戻る</Text>
+          <Text className="text-blue-400 hover:text-blue-700">Home</Text>
         </Link>
       </Paper>
     </Layout>

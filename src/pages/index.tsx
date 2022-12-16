@@ -6,11 +6,9 @@ import { Auth } from "../components/Auth";
 import { Layout } from "../components/Layout";
 import { TermRegisterModal } from "../components/term/RegisterModal";
 import { TermSelect } from "../components/term/Select";
-import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
-  const { data } = trpc.salaryInfo.getSalaryInfos.useQuery();
 
   if (!session) {
     return (
@@ -26,7 +24,7 @@ const Home: NextPage = () => {
           <TermRegisterModal />
         </Center>
 
-        <TermSelect salalyInfos={data} />
+        <TermSelect />
       </Paper>
     </Layout>
   );

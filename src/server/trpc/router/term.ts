@@ -33,6 +33,18 @@ export const termRouter = router({
     });
   }),
 
+  getTermsIncludeSalalyInfos: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.term.findMany({
+      where: {
+        userId: ctx.session?.user?.id,
+      },
+      orderBy: { year: "desc" },
+      include: {
+        salaryInfo: true,
+      },
+    });
+  }),
+
   getSingleTerm: protectedProcedure
     .input(getSingleTermSchema)
     .query(({ ctx, input }) => {
@@ -42,6 +54,8 @@ export const termRouter = router({
         },
       });
     }),
+
+
 
   updateTerm: protectedProcedure
     .input(updateTermSchema)
