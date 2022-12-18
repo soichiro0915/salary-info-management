@@ -86,7 +86,6 @@ const useStore = create<State>((set) => ({
     .map((month) => {
       return {
         id: "",
-        salaryInfoId: "",
         month: month,
         basicSalary: 0,
         overtimePay: 0,

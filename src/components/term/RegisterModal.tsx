@@ -47,7 +47,7 @@ export const TermRegisterModal = () => {
   return (
     <>
       <Button
-        className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
+        className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700 w-full"
         onClick={() => setTermCreateModalOpen(true)}
       >
         +年度追加

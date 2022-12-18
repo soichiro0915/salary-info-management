@@ -1,11 +1,10 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import { Paper, Center } from "@mantine/core";
+import { Paper } from "@mantine/core";
 
 import { Auth } from "../components/Auth";
 import { Layout } from "../components/Layout";
-import { TermRegisterModal } from "../components/term/RegisterModal";
-import { TermSelect } from "../components/term/Select";
+import { TermItem } from "../components/term/Item";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -19,12 +18,8 @@ const Home: NextPage = () => {
   }
   return (
     <Layout title="Salary Info Management App">
-      <Paper className='pt-4'>
-        <Center>
-          <TermRegisterModal />
-        </Center>
-
-        <TermSelect />
+      <Paper className="p-10">
+        <TermItem />
       </Paper>
     </Layout>
   );

@@ -85,7 +85,7 @@ export const TermItem: FC = () => {
 
   return (
     <>
-      <div className="mt-5 mb-5 flex w-full justify-around rounded-lg border border-gray-200 bg-white py-2 shadow-md hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+      <div className="flex w-full justify-around rounded-lg border border-gray-200 bg-white py-2 shadow-md hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div>
           <Text>収入</Text>
           <Text>{salary?.toLocaleString()}円</Text>
